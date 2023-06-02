@@ -1,0 +1,56 @@
+.tableFilters {
+    margin: 1rem 0;
+    font-size: 15px;
+}
+
+.filterWrapper {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.filterLabel {
+    color: #fff;
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+}
+
+.filterInput {
+    display: block;
+    background: #fff0;
+    border: none;
+    border-bottom: 1px solid var(--lightColor);
+    padding: 8px 12px;
+    font-size: 14px;
+    color: var(--lightColor);
+    resize: none;
+    outline: none;
+    margin-bottom: 0.2rem;
+}
+
+.filterInput::placeholder {
+    color: var(--lightColor);
+}
+
+.filterInput::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.searchWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.searchButton {
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    color: #fff;
+    width: 30px;
+    height: 100%;
+}
+
+.searchInput {
+    padding-right: 30px;
+}

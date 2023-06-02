@@ -1,0 +1,38 @@
+.customButton {
+    border: 2px solid;
+    border-radius: 99px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    min-width: 120px;
+    padding: .6rem 1.8rem;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: .3s linear
+}
+
+.primaryButton {
+    background: #fff;
+    border-color: #fff;
+    color: #000
+}
+
+.secondaryButton {
+    background: #fff0;
+    border-color: #fff;
+    color: #fff
+}
+
+.primaryButton:hover {
+    background: var(--primaryColor);
+    color: #fff
+}
+
+.secondaryButton:hover {
+    background: #fff;
+    color: #000
+}

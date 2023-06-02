@@ -1,0 +1,207 @@
+@import url('./../fonts/stylesheet.css');
+
+/*----- General Css Start -----*/
+
+:root {
+    --primaryColor: #013D5F;
+    --secondaryColor: #21173A;
+    --lightColor: #89a8b9;
+    --grayColor: #666666;
+    --redColor: #ff0000;
+    --greenColor: #42C900;
+    --yellowColor: #E5BB45;
+}
+
+body {
+    font-family: 'Poppins';
+    font-weight: 400;
+    color: #fff;
+    background: var(--primaryColor);
+}
+
+.primaryColor {
+    color: var(--primaryColor) !important;
+}
+
+.grayColor {
+    color: var(--grayColor) !important;
+}
+
+.smallText {
+    font-size: 14px;
+}
+
+.lightColor {
+    color: var(--lightColor) !important;
+}
+
+.greenColor {
+    color: var(--greenColor) !important;
+}
+
+.redColor {
+    color: var(--redColor) !important;
+}
+
+.yellowColor {
+    color: var(--yellowColor) !important;
+}
+
+.notButton {
+    border: none;
+    background: none;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.oneLine {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.classicToggle::after {
+    display: none;
+}
+
+.imageInput img {
+    width: 360px;
+    max-width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid var(--lightColor);
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.thumbnailInput img {
+    width: 90px;
+    max-width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid var(--lightColor);
+    border-radius: 99px;
+    cursor: pointer;
+}
+
+.audioInput {
+    display: inline-block;
+    background: #fff;
+    color: var(--primaryColor);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 99px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+}
+
+.audioInputName {
+    font-size: 14px;
+    color: var(--lightColor);
+    margin: 0.2rem 0;
+}
+
+/*----- General Css End -----*/
+
+
+
+
+/*----- Modal Css Start -----*/
+
+body.swal2-shown>[aria-hidden="true"] {
+    transition: 0.1s filter;
+    filter: blur(10px);
+}
+
+.swal2-title {
+    font-size: 26px;
+    font-weight: 500;
+}
+
+/*----- Modal Css End -----*/
+
+
+
+/*----- Audio Player Css Start -----*/
+
+ /* Style the play and pause button */
+ .audioPlayer::-webkit-media-controls-play-button,
+ .audioPlayer::-webkit-media-controls-pause-button {
+   background-color: var(--primaryColor);
+   border-radius: 50%;
+ }
+
+ /* Style the progress bar */
+ .audioPlayer::-webkit-media-controls-current-time-display,
+ .audioPlayer::-webkit-media-controls-time-remaining-display,
+ .audioPlayer::-webkit-media-controls-timeline,
+ .audioPlayer::-webkit-media-controls-volume-slider {
+   color: var(--primaryColor);
+ }
+
+ /* Style the volume slider */
+ .audioPlayer::-webkit-media-controls-volume-slider {
+   height: 8px;
+   width: 800px;
+ }
+
+/*----- Audio Player Css End -----*/
+
+
+.dashCard {
+    background: #fff0;
+    border-radius: 0.5rem;
+    padding: 1rem 1rem;
+}
+
+.mainTitle {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.profileImage img {
+    width: 90px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 99px;
+    outline: 2px solid #bcbcbc;
+    outline-offset: 4px;
+}
+
+.statusBadge {
+    font-size: 15px;
+    color: #fff;
+    padding: 0.4rem 0.8rem;
+    border-top-left-radius: 99px;
+    border-bottom-left-radius: 99px;
+    position: relative;
+    left: 2rem;
+
+}
+
+.statusBadgeActive {
+    background: var(--greenColor);
+}
+
+.statusBadgeInactive {
+    background: var(--redColor);
+}
+
+.secondaryLabel {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.2rem;
+}
+
+.secondaryText {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--lightColor);
+    margin-bottom: 0.2rem;
+}

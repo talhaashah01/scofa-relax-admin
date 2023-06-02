@@ -1,0 +1,32 @@
+.inputWrapper {
+    margin-bottom: 1rem;
+}
+
+.mainLabel {
+    font-size: 15px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.mainInput {
+    background: #fff0;
+    border: none;
+    border-bottom: 1px solid #fff;
+    font-weight: 600;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff;
+    width: 100%;
+    resize: none;
+    border-radius: none;
+    /* appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none; */
+    outline: none;
+}
+
+.mainInput option {
+    color: var(--lightColor);
+    background: var(--primaryColor);
+}

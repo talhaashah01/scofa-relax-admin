@@ -1,0 +1,44 @@
+.statsCard {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    background: #084774;
+    border: 1px solid #42a8ff75;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.statsContent {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.statsImg {
+    flex-shrink: 0;
+}
+
+.statsImg img {
+    width: 60px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0.5rem;
+}
+
+.statsData {
+    flex-grow: 1;
+}
+
+.statsNumber {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.statsText {
+    font-size: 14px;
+    color: #fff;
+    margin: 0;
+}

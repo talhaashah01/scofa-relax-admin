@@ -1,0 +1,35 @@
+.customPagination {
+    margin: 1rem 0;
+}
+
+.paginationText {
+    font-size: 14px;
+    color: #fff;
+    margin: 0;
+}
+
+.customPagination .pagination {
+    justify-content: end;
+}
+
+.customPagination .page-item .page-link {
+    font-size: 14px;
+    color: #fff;
+    background: #100b16;
+    border: 1px solid #3b2d5e;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    padding: 0.5rem 0.8rem;
+    transition: 0.3s linear;
+}
+
+.customPagination .page-item:first-child .page-link, .customPagination .page-item:last-child .page-link {
+    border-radius: 0;
+}
+
+.customPagination .page-item.active .page-link, .customPagination .page-item:hover .page-link {
+    color: #fff;
+    background: var(--secondaryColor);
+    box-shadow: none;
+}

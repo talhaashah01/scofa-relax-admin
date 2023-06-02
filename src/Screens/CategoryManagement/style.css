@@ -1,0 +1,44 @@
+.customTabs {
+    justify-content: center;
+    border: none;
+    gap: 8px;
+}
+
+.customTabs .nav-link {
+    border: 2px solid #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    min-width: 120px;
+    padding: 0.6rem 1.8rem;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: .3s linear;
+    background: #fff0;
+    color: #fff;
+}
+
+.customTabs .nav-link.active {
+    background: #fff;
+    color: #000;
+}
+
+
+
+.categoryItem {
+    background: #fff0;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 15px;
+    border: 2px solid #fff;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    word-break: break-all;
+}
