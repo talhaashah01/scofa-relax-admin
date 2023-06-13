@@ -95,6 +95,7 @@ const AddMeditation = () => {
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
     formDataToSend.append("meditationcategory", formData.genre);
+    formDataToSend.append("naration", true);
 
     setLoader(true);
     try {

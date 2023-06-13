@@ -95,6 +95,7 @@ const AddSound = () => {
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
     formDataToSend.append("soundcategory", formData.category);
+    formDataToSend.append("naration", false);
 
     setLoader(true);
     try {
