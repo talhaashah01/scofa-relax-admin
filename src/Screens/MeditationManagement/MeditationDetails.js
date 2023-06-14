@@ -79,7 +79,7 @@ const MeditationDetails = () => {
                   )}
                 </div>
                 <div className="col-lg-6 mb-2">
-                  <p className="mainLabel">Genre:</p>
+                  <p className="mainLabel">Category:</p>
                   <p>{data.meditationcategoriesname}</p>
                 </div>
                 <div className="col-lg-6 mb-2">

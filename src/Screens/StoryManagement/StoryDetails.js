@@ -80,7 +80,7 @@ const StoryDetails = () => {
                   )}
                 </div>
                 <div className="col-lg-6 mb-2">
-                  <p className="mainLabel">Genre:</p>
+                  <p className="mainLabel">Category:</p>
                   <p>{data.storycategoriesname}</p>
                 </div>
                 <div className="col-lg-6 mb-2">

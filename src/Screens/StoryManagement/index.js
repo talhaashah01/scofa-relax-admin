@@ -33,7 +33,6 @@ const StoryManagement = () => {
   const [sort, setSort] = useState("all");
   const [totalCount, setTotalCount] = useState(0);
 
-  console.log(data)
 
   useEffect(() => {
     document.title = "Scofa Relax | Story Management";
@@ -98,8 +97,8 @@ const StoryManagement = () => {
       title: "Type",
     },
     {
-      key: "genre",
-      title: "Genre",
+      key: "category",
+      title: "Category",
     },
     {
       key: "actions",
@@ -121,6 +120,7 @@ const StoryManagement = () => {
       text: "Registered Date",
     },
   ];
+
 
   return (
     <>

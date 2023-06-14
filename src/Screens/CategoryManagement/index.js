@@ -259,8 +259,8 @@ const CategoryManagement = () => {
       title: "S.No",
     },
     {
-      key: "genre",
-      title: "Genre",
+      key: "category",
+      title: "Category",
     },
     {
       key: "actions",
@@ -274,8 +274,8 @@ const CategoryManagement = () => {
       title: "S.No",
     },
     {
-      key: "genre",
-      title: "Genre",
+      key: "category",
+      title: "Category",
     },
     {
       key: "actions",
@@ -289,8 +289,8 @@ const CategoryManagement = () => {
       title: "S.No",
     },
     {
-      key: "genre",
-      title: "Genre",
+      key: "categry",
+      title: "Category",
     },
     {
       key: "actions",

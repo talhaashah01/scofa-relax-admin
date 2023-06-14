@@ -27,7 +27,6 @@ const AddSound = () => {
   const [sound, setSound] = useState(null);
   const [soundError, setSoundError] = useState(false);
 
-
   const [soundImage, setSoundImage] = useState(null);
   const [soundThumbnail, setSoundThumbnail] = useState(null);
 
@@ -37,7 +36,9 @@ const AddSound = () => {
   useEffect(() => {
     async function fetchSound() {
       try {
-        const response = await axios.get(`${BASEURL}/api/sounds/soundscategories`);
+        const response = await axios.get(
+          `${BASEURL}/api/sounds/soundscategories`
+        );
         setSoundOptions(response.data.data);
       } catch (error) {
         console.error(error);
@@ -46,15 +47,20 @@ const AddSound = () => {
     fetchSound();
   }, []);
 
+  useEffect(() => {
+    const firstCategory = soundOptions[0]?.id.toString();
+    setFormData({ category: firstCategory });
+  }, [soundOptions]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSoundChange = (event) => {
-    const audioResult = checkAudioFormat(event)
-    setSound(audioResult.selectedFile)
-    setSoundError(audioResult.error)
+    const audioResult = checkAudioFormat(event);
+    setSound(audioResult.selectedFile);
+    setSoundError(audioResult.error);
   };
 
   const handleImageChange = (event) => {
@@ -99,11 +105,15 @@ const AddSound = () => {
 
     setLoader(true);
     try {
-      const response = await axios.post(`${BASEURL}/api/sounds/`, formDataToSend, {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post(
+        `${BASEURL}/api/sounds/`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.error === false) {
         successModal.fire({
           text: "Sound Added Successfully",
@@ -202,7 +212,9 @@ const AddSound = () => {
                         <p className="audioInputName oneLine">{sound.name}</p>
                       )}
                       {soundError && (
-                        <p className="audioInputName">Please select MP3 or Wav file</p>
+                        <p className="audioInputName">
+                          Please select MP3 or Wav file
+                        </p>
                       )}
                       <input
                         type="file"
@@ -222,7 +234,7 @@ const AddSound = () => {
                         id="category"
                         className="mainInput w-auto"
                         required
-                        value={formData.category || ""}
+                        // value={formData.category || ""}
                         onChange={handleChange}
                       >
                         {soundOptions.map((item, index) => (

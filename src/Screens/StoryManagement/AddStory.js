@@ -46,6 +46,13 @@ const AddStory = () => {
     fetchStory();
   }, []);
 
+  console.log(formData)
+
+  useEffect(() => {
+    const firstCategory = storyOptions[0]?.id.toString();
+    setFormData({ category: firstCategory });
+  }, [storyOptions]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -94,7 +101,7 @@ const AddStory = () => {
     formDataToSend.append("audio", story);
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
-    formDataToSend.append("storycategory", formData.genre);
+    formDataToSend.append("storycategory", formData.category);
     formDataToSend.append("naration", true);
 
 
@@ -216,14 +223,13 @@ const AddStory = () => {
                     </label>
                   </div>
                   <div className="col-lg-6 mb-2">
-                    <p className="mainLabel">Select Genre*</p>
+                    <p className="mainLabel">Select Category*</p>
                     {storyOptions && (
                       <select
-                        name="genre"
-                        id="genre"
+                        name="category"
+                        id="category"
                         className="mainInput w-auto"
                         required
-                        value={formData.genre || ""}
                         onChange={handleChange}
                       >
                         {storyOptions.map((item, index) => (

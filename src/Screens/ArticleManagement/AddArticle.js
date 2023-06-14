@@ -46,6 +46,12 @@ const AddArticle = () => {
     fetchArticle();
   }, []);
 
+
+  useEffect(() => {
+    const firstCategory = articleOptions[0]?.id.toString();
+    setFormData({ category: firstCategory });
+  }, [articleOptions]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -94,7 +100,7 @@ const AddArticle = () => {
     formDataToSend.append("audio", article);
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
-    formDataToSend.append("articlecategory", formData.genre);
+    formDataToSend.append("articlecategory", formData.category);
     formDataToSend.append("naration", true);
 
 
@@ -216,14 +222,14 @@ const AddArticle = () => {
                     </label>
                   </div>
                   <div className="col-lg-6 mb-2">
-                    <p className="mainLabel">Select Genre*</p>
+                    <p className="mainLabel">Select Category*</p>
                     {articleOptions && (
                       <select
-                        name="genre"
-                        id="genre"
+                        name="category"
+                        id="category"
                         className="mainInput w-auto"
                         required
-                        value={formData.genre || ""}
+                        // value={formData.category || ""}
                         onChange={handleChange}
                       >
                         {articleOptions.map((item, index) => (

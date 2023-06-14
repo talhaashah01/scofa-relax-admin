@@ -33,7 +33,6 @@ const ArticleManagement = () => {
   const [sort, setSort] = useState("all");
   const [totalCount, setTotalCount] = useState(0);
 
-  console.log(data)
 
   useEffect(() => {
     document.title = "Scofa Relax | Article Management";
@@ -98,8 +97,8 @@ const ArticleManagement = () => {
       title: "Type",
     },
     {
-      key: "genre",
-      title: "Genre",
+      key: "category",
+      title: "Category",
     },
     {
       key: "actions",
@@ -174,7 +173,7 @@ const ArticleManagement = () => {
                           {item.title}
                         </td>
                         <td>{item.premium ? "Premium" : "Free"}</td>
-                        {/* <td>{item.meditationcategoriesname}</td> */}
+                        <td>{item.articlecategoriesname}</td>
                         <td>
                           <Dropdown className="tableDropdown">
                             <Dropdown.Toggle

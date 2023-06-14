@@ -27,7 +27,6 @@ const AddMeditation = () => {
   const [meditation, setMeditation] = useState(null);
   const [meditationError, setMeditationError] = useState(false);
 
-
   const [meditationImage, setMeditationImage] = useState(null);
   const [meditationThumbnail, setMeditationThumbnail] = useState(null);
 
@@ -37,7 +36,9 @@ const AddMeditation = () => {
   useEffect(() => {
     async function fetchMeditation() {
       try {
-        const response = await axios.get(`${BASEURL}/api/meditation/mediationcategories`);
+        const response = await axios.get(
+          `${BASEURL}/api/meditation/mediationcategories`
+        );
         setMeditationOptions(response.data.data);
       } catch (error) {
         console.error(error);
@@ -46,15 +47,20 @@ const AddMeditation = () => {
     fetchMeditation();
   }, []);
 
+  useEffect(() => {
+    const firstCategory = meditationOptions[0]?.id.toString();
+    setFormData({ category: firstCategory });
+  }, [meditationOptions]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleMeditationChange = (event) => {
-    const audioResult = checkAudioFormat(event)
-    setMeditation(audioResult.selectedFile)
-    setMeditationError(audioResult.error)
+    const audioResult = checkAudioFormat(event);
+    setMeditation(audioResult.selectedFile);
+    setMeditationError(audioResult.error);
   };
 
   const handleImageChange = (event) => {
@@ -94,16 +100,20 @@ const AddMeditation = () => {
     formDataToSend.append("audio", meditation);
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
-    formDataToSend.append("meditationcategory", formData.genre);
+    formDataToSend.append("meditationcategory", formData.category);
     formDataToSend.append("naration", true);
 
     setLoader(true);
     try {
-      const response = await axios.post(`${BASEURL}/api/meditation/`, formDataToSend, {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post(
+        `${BASEURL}/api/meditation/`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.error === false) {
         successModal.fire({
           text: "Meditation Added Successfully",
@@ -199,10 +209,14 @@ const AddMeditation = () => {
                         <span>Select File(MP3/Wav)</span>
                       </div>
                       {meditation && (
-                        <p className="audioInputName oneLine">{meditation.name}</p>
+                        <p className="audioInputName oneLine">
+                          {meditation.name}
+                        </p>
                       )}
                       {meditationError && (
-                        <p className="audioInputName">Please select MP3 or Wav file</p>
+                        <p className="audioInputName">
+                          Please select MP3 or Wav file
+                        </p>
                       )}
                       <input
                         type="file"
@@ -215,14 +229,13 @@ const AddMeditation = () => {
                     </label>
                   </div>
                   <div className="col-lg-6 mb-2">
-                    <p className="mainLabel">Select Genre*</p>
+                    <p className="mainLabel">Select Category*</p>
                     {meditationOptions && (
                       <select
-                        name="genre"
-                        id="genre"
+                        name="category"
+                        id="category"
                         className="mainInput w-auto"
                         required
-                        value={formData.genre || ""}
                         onChange={handleChange}
                       >
                         {meditationOptions.map((item, index) => (

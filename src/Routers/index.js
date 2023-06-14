@@ -21,6 +21,7 @@ import EditSound from "../Screens/SoundManagement/EditSound";
 import MeditationManagement from "../Screens/MeditationManagement";
 import AddMeditation from "../Screens/MeditationManagement/AddMeditation";
 import MeditationDetails from "../Screens/MeditationManagement/MeditationDetails";
+import EditMeditation from "../Screens/MeditationManagement/EditMeditation";
 
 import StoryManagement from "../Screens/StoryManagement";
 import AddStory from "../Screens/StoryManagement/AddStory";
@@ -157,6 +158,14 @@ const AdminRouter = () => {
           element={
             <PrivateRoutes>
               <MeditationDetails />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/meditation-management/edit-meditation/:id"
+          element={
+            <PrivateRoutes>
+              <EditMeditation />
             </PrivateRoutes>
           }
         />
