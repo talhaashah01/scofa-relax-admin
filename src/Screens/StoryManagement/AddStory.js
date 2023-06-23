@@ -204,18 +204,18 @@ const AddStory = () => {
                     <p className="mainLabel">Audio*</p>
                     <label>
                       <div className="audioInput">
-                        <span>Select File(MP3/Wav)</span>
+                        <span>Select Audio File</span>
                       </div>
                       {story && (
                         <p className="audioInputName oneLine">{story.name}</p>
                       )}
                       {storyError && (
-                        <p className="audioInputName">Please select MP3 or Wav file</p>
+                        <p className="audioInputName">Please select correct file format</p>
                       )}
                       <input
                         type="file"
                         name="story"
-                        accept="audio/mp3, audio/wav"
+                        accept="audio/*"
                         className="d-none"
                         required
                         onChange={handleStoryChange}

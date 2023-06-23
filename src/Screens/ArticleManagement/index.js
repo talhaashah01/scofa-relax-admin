@@ -196,7 +196,7 @@ const ArticleManagement = () => {
                                 />
                                 View
                               </Link>
-                              {/* <Link
+                              <Link
                                 to={`/article-management/edit-article/${item.id}`}
                                 className="tableAction"
                               >
@@ -205,7 +205,7 @@ const ArticleManagement = () => {
                                   className="tableActionIcon"
                                 />
                                 Edit
-                              </Link> */}
+                              </Link>
                               <button
                                 className="tableAction"
                                 onClick={() => {

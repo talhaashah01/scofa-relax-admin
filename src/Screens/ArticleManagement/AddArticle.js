@@ -203,18 +203,18 @@ const AddArticle = () => {
                     <p className="mainLabel">Audio*</p>
                     <label>
                       <div className="audioInput">
-                        <span>Select File(MP3/Wav)</span>
+                        <span>Select Audio File</span>
                       </div>
                       {article && (
                         <p className="audioInputName oneLine">{article.name}</p>
                       )}
                       {articleError && (
-                        <p className="audioInputName">Please select MP3 or Wav file</p>
+                        <p className="audioInputName">Please select correct file format</p>
                       )}
                       <input
                         type="file"
                         name="article"
-                        accept="audio/mp3, audio/wav"
+                        accept="audio/*"
                         className="d-none"
                         required
                         onChange={handleArticleChange}

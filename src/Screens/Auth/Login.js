@@ -24,7 +24,7 @@ const AdminLogin = () => {
     const formDataToSend = new FormData();
     formDataToSend.append("username", formData.username);
     formDataToSend.append("password", formData.password);
-    formDataToSend.append("type", "admin");
+    formDataToSend.append("admin", "true");
     try {
       const response = await axios.post(`${BASEURL}/api/user/login/`, formDataToSend);
       if (response.data.error === false) {

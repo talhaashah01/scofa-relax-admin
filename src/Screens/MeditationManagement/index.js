@@ -196,7 +196,7 @@ const MeditationManagement = () => {
                                 />
                                 View
                               </Link>
-                              {/* <Link
+                              <Link
                                 to={`/meditation-management/edit-meditation/${item.id}`}
                                 className="tableAction"
                               >
@@ -205,7 +205,7 @@ const MeditationManagement = () => {
                                   className="tableActionIcon"
                                 />
                                 Edit
-                              </Link> */}
+                              </Link>
                               <button
                                 className="tableAction"
                                 onClick={() => {

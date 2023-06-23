@@ -24,6 +24,7 @@ const AddSound = () => {
   const [formData, setFormData] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [featuredState, setFeaturedState] = useState(false);
   const [sound, setSound] = useState(null);
   const [soundError, setSoundError] = useState(false);
 
@@ -101,6 +102,7 @@ const AddSound = () => {
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
     formDataToSend.append("soundcategory", formData.category);
+    formDataToSend.append("featured", featuredState);
     formDataToSend.append("naration", false);
 
     setLoader(true);
@@ -206,20 +208,20 @@ const AddSound = () => {
                     <p className="mainLabel">Sound*</p>
                     <label>
                       <div className="audioInput">
-                        <span>Select File(MP3/Wav)</span>
+                        <span>Select Audio File</span>
                       </div>
                       {sound && (
                         <p className="audioInputName oneLine">{sound.name}</p>
                       )}
                       {soundError && (
                         <p className="audioInputName">
-                          Please select MP3 or Wav file
+                          Please select correct file format
                         </p>
                       )}
                       <input
                         type="file"
                         name="sound"
-                        accept="audio/mp3, audio/wav"
+                        accept="audio/*"
                         className="d-none"
                         required
                         onChange={handleSoundChange}
@@ -283,6 +285,19 @@ const AddSound = () => {
                         required
                         onChange={handleImageChange}
                       />
+                    </label>
+                  </div>
+                  <div className="col-12 mb-2">
+                    <input
+                      type="checkbox"
+                      name="featured"
+                      id="featured"
+                      onChange={() => {
+                        setFeaturedState(!featuredState);
+                      }}
+                    />
+                    <label htmlFor="featured" className="mainLabel ms-1">
+                      Featured
                     </label>
                   </div>
                 </div>

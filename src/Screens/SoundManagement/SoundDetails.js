@@ -71,7 +71,7 @@ const SoundDetails = () => {
                       <audio className="audioPlayer" controls>
                         <source
                           src={`${BASEURL+data.audio}`}
-                          type="audio/mp3"
+                          type="audio/*"
                         />
                         Your browser does not support the audio element.
                       </audio>

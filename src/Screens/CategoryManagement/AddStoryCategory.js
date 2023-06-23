@@ -101,7 +101,7 @@ const AddStoryCategory = () => {
                           required=""
                           name="category"
                           className="mainInput"
-                          maxlength="15"
+                          maxLength="15"
                           value={inputValue || ""}
                           onChange={handleChange}
                         />

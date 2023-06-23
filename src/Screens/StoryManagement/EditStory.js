@@ -13,18 +13,20 @@ import CustomLoader from "../../Components/CustomLoader";
 import "./style.css";
 import BASEURL from "../../Config/global";
 
-const EditMeditation = () => {
+const EditStory = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [meditationOptions, setMeditationOptions] = useState([]);
+  const [storyOptions, setStoryOptions] = useState([]);
+
+  console.log(data)
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`${BASEURL}/api/meditation/${id}`);
-        setData(response.data.data);
+        const response = await axios.get(`${BASEURL}/api/stories/${id}`);
+        setData(response.data.data[0]);
       } catch (error) {
         console.error(error);
       }
@@ -35,25 +37,25 @@ const EditMeditation = () => {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
-  const [meditation, setMeditation] = useState(null);
-  const [meditationError, setMeditationError] = useState(false);
+  const [story, setStory] = useState(null);
+  const [storyError, setStoryError] = useState(false);
 
-  const [meditationImage, setMeditationImage] = useState(null);
-  const [meditationThumbnail, setMeditationThumbnail] = useState(null);
+  const [storyImage, setStoryImage] = useState(null);
+  const [storyThumbnail, setStoryThumbnail] = useState(null);
 
   const [error, setError] = useState({ error: false, text: "" });
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    async function fetchMeditation() {
+    async function fetchStory() {
       try {
-        const response = await axios.get(`${BASEURL}/api/meditation/mediationcategories`);
-        setMeditationOptions(response.data.data);
+        const response = await axios.get(`${BASEURL}/api/stories/storiescategories`);
+        setStoryOptions(response.data.data);
       } catch (error) {
         console.error(error);
       }
     }
-    fetchMeditation();
+    fetchStory();
   }, []);
 
   const handleChange = (event) => {
@@ -61,9 +63,9 @@ const EditMeditation = () => {
     setData({ ...data, [name]: value });
   };
 
-  const handleMeditationChange = (event) => {
-      setMeditation(event.target.files[0]);
-      setMeditationError(false);
+  const handleStoryChange = (event) => {
+      setStory(event.target.files[0]);
+      setStoryError(false);
   };
 
   const handleImageChange = (event) => {
@@ -71,12 +73,12 @@ const EditMeditation = () => {
     setSelectedImage(file);
 
     if (file === null || file === "undefined") {
-      setMeditationImage(null);
+      setStoryImage(null);
     } else {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        setMeditationImage(reader.result);
+        setStoryImage(reader.result);
       };
     }
   };
@@ -86,41 +88,41 @@ const EditMeditation = () => {
     setSelectedThumbnail(file);
 
     if (file === null || file === "undefined") {
-      setMeditationThumbnail(null);
+      setStoryThumbnail(null);
     } else {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        setMeditationThumbnail(reader.result);
+        setStoryThumbnail(reader.result);
       };
     }
   };
 
 
-  const updateMeditation = async () => {
+  const updateStory = async () => {
     const formDataToSend = new FormData();
     formDataToSend.append("image", selectedImage);
     formDataToSend.append("thumbnail", selectedThumbnail);
-    formDataToSend.append("audio", meditation);
+    formDataToSend.append("audio", story);
     formDataToSend.append("title", data.title);
     formDataToSend.append("premium", data.premium);
-    formDataToSend.append("meditationcategory", data.meditationcategory);
+    formDataToSend.append("storiescategory", data.storiescategory);
 
     setLoader(true);
     try {
-      const response = await axios.patch(`${BASEURL}/api/meditation/${id}`, formDataToSend, {
+      const response = await axios.patch(`${BASEURL}/api/stories/${id}`, formDataToSend, {
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,
         },
       });
       if (response.data.error === false) {
         successModal.fire({
-          text: "Meditation Updated Successfully",
+          text: "Story Updated Successfully",
           confirmButtonText: "Continue",
         });
         setError({ error: false, text: "" });
         setLoader(false);
-        navigate("/meditation-management");
+        navigate("/story-management");
       } else {
         setError({ error: true, text: response.data.message });
         setLoader(false);
@@ -137,12 +139,12 @@ const EditMeditation = () => {
     event.preventDefault();
     questionModal
       .fire({
-        title: "Do you want to Update this Meditation?",
+        title: "Do you want to Update this Story?",
         confirmButtonText: "Update",
       })
       .then((result) => {
         if (result.isConfirmed) {
-          updateMeditation();
+          updateStory();
         }
       });
   };
@@ -155,7 +157,7 @@ const EditMeditation = () => {
             <div className="col-12 mb-2">
               <h2 className="mainTitle">
                 <BackButton />
-                Edit Meditation
+                Edit Story
               </h2>
             </div>
           </div>
@@ -204,7 +206,7 @@ const EditMeditation = () => {
                       </label>
                     </div>
                     <div className="col-lg-6 mb-2">
-                      <p className="mainLabel">Current Meditation</p>
+                      <p className="mainLabel">Current Story</p>
                       {data.audio && (
                         <>
                           <audio className="audioPlayer" controls>
@@ -218,39 +220,38 @@ const EditMeditation = () => {
                       )}
                     </div>
                     <div className="col-lg-6 mb-2">
-                      <p className="mainLabel">New Meditation*</p>
+                      <p className="mainLabel">New Story*</p>
                       <label>
                         <div className="audioInput">
                           <span>Select Audio File</span>
                         </div>
-                        {meditation && (
-                          <p className="audioInputName oneLine">{meditation.name}</p>
+                        {story && (
+                          <p className="audioInputName oneLine">{story.name}</p>
                         )}
-                        {meditationError && (
+                        {storyError && (
                           <p className="audioInputName">Please select correct file format</p>
                         )}
                         <input
                           type="file"
-                          name="meditation"
+                          name="story"
                           accept="audio/*"
                           className="d-none"
-                          // required
-                          onChange={handleMeditationChange}
+                          onChange={handleStoryChange}
                         />
                       </label>
                     </div>
                     <div className="col-lg-6 mb-2">
                       <p className="mainLabel">Select Category*</p>
-                      {meditationOptions && (
+                      {storyOptions && (
                         <select
-                          name="meditationcategory"
+                          name="storiescategory"
                           id="category"
                           className="mainInput w-auto"
                           // required
-                          value={data.meditationcategory}
+                          value={data.storiescategory}
                           onChange={handleChange}
                         >
-                          {meditationOptions.map((item, index) => (
+                          {storyOptions.map((item, index) => (
                             <option key={index} value={item.id}>
                               {item.name}
                             </option>
@@ -262,8 +263,8 @@ const EditMeditation = () => {
                       <p className="mainLabel">Thumbnail*</p>
                       <label>
                         <div className="thumbnailInput">
-                          {meditationThumbnail ? (
-                            <img src={meditationThumbnail} alt="Thumbnail" />
+                          {storyThumbnail ? (
+                            <img src={storyThumbnail} alt="Thumbnail" />
                           ) : (
                             <img src={`${BASEURL+data.thumbnail}`} alt="Thumbnail" />
                           )}
@@ -282,8 +283,8 @@ const EditMeditation = () => {
                       <p className="mainLabel">Image*</p>
                       <label>
                         <div className="imageInput">
-                          {meditationImage ? (
-                            <img src={meditationImage} alt="Main" />
+                          {storyImage ? (
+                            <img src={storyImage} alt="Main" />
                           ) : (
                             <img src={`${BASEURL+data.image}`} alt="Main" />
                           )}
@@ -326,4 +327,4 @@ const EditMeditation = () => {
     </>
   );
 };
-export default EditMeditation;
+export default EditStory;

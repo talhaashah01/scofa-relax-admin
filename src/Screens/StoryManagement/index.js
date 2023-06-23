@@ -197,7 +197,7 @@ const StoryManagement = () => {
                                 />
                                 View
                               </Link>
-                              {/* <Link
+                              <Link
                                 to={`/story-management/edit-story/${item.id}`}
                                 className="tableAction"
                               >
@@ -206,7 +206,7 @@ const StoryManagement = () => {
                                   className="tableActionIcon"
                                 />
                                 Edit
-                              </Link> */}
+                              </Link>
                               <button
                                 className="tableAction"
                                 onClick={() => {

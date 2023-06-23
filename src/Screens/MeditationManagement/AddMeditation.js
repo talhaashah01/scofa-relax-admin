@@ -206,7 +206,7 @@ const AddMeditation = () => {
                     <p className="mainLabel">Audio*</p>
                     <label>
                       <div className="audioInput">
-                        <span>Select File(MP3/Wav)</span>
+                        <span>Select Audio File</span>
                       </div>
                       {meditation && (
                         <p className="audioInputName oneLine">
@@ -215,13 +215,13 @@ const AddMeditation = () => {
                       )}
                       {meditationError && (
                         <p className="audioInputName">
-                          Please select MP3 or Wav file
+                          Please select correct file format
                         </p>
                       )}
                       <input
                         type="file"
                         name="meditation"
-                        accept="audio/mp3, audio/wav"
+                        accept="audio/*"
                         className="d-none"
                         required
                         onChange={handleMeditationChange}

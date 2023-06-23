@@ -26,10 +26,12 @@ import EditMeditation from "../Screens/MeditationManagement/EditMeditation";
 import StoryManagement from "../Screens/StoryManagement";
 import AddStory from "../Screens/StoryManagement/AddStory";
 import StoryDetails from "../Screens/StoryManagement/StoryDetails";
+import EditStory from "../Screens/StoryManagement/EditStory";
 
 import ArticleManagement from "../Screens/ArticleManagement";
 import AddArticle from "../Screens/ArticleManagement/AddArticle";
 import ArticleDetails from "../Screens/ArticleManagement/ArticleDetails";
+import EditArticle from "../Screens/ArticleManagement/EditArticle";
 
 // import Error from "../Screens/Error";
 
@@ -85,7 +87,7 @@ const AdminRouter = () => {
             </PrivateRoutes>
           }
         />
-     
+
         <Route
           path="/category-management/add-story-category"
           element={
@@ -94,7 +96,7 @@ const AdminRouter = () => {
             </PrivateRoutes>
           }
         />
-     
+
         <Route
           path="/category-management/add-article-category"
           element={
@@ -194,6 +196,14 @@ const AdminRouter = () => {
             </PrivateRoutes>
           }
         />
+        <Route
+          path="/story-management/edit-story/:id"
+          element={
+            <PrivateRoutes>
+              <EditStory />
+            </PrivateRoutes>
+          }
+        />
 
         <Route
           path="/article-management"
@@ -216,6 +226,14 @@ const AdminRouter = () => {
           element={
             <PrivateRoutes>
               <ArticleDetails />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/article-management/edit-article/:id"
+          element={
+            <PrivateRoutes>
+              <EditArticle />
             </PrivateRoutes>
           }
         />

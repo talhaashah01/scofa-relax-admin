@@ -20,21 +20,9 @@ const EditSound = () => {
   const [data, setData] = useState({});
   const [soundOptions, setSoundOptions] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(`${BASEURL}/api/sounds/${id}`);
-        setData(response.data.data[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
-
-
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [featuredState, setFeaturedState] = useState(null);
   const [sound, setSound] = useState(null);
   const [soundError, setSoundError] = useState(false);
 
@@ -45,9 +33,24 @@ const EditSound = () => {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(`${BASEURL}/api/sounds/${id}`);
+        setData(response.data.data[0]);
+        setFeaturedState(data.featured);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     async function fetchSound() {
       try {
-        const response = await axios.get(`${BASEURL}/api/sounds/soundscategories`);
+        const response = await axios.get(
+          `${BASEURL}/api/sounds/soundscategories`
+        );
         setSoundOptions(response.data.data);
       } catch (error) {
         console.error(error);
@@ -62,15 +65,8 @@ const EditSound = () => {
   };
 
   const handleSoundChange = (event) => {
-    const selectedFile = event.target.files[0];
-    const fileExtension = selectedFile.name.split(".").pop().toLowerCase();
-    if (fileExtension === "mp3") {
-      setSound(selectedFile);
-      setSoundError(false);
-    } else {
-      setSound(null);
-      setSoundError(true);
-    }
+    setSound(event.target.files[0]);
+    setSoundError(false);
   };
 
   const handleImageChange = (event) => {
@@ -103,7 +99,6 @@ const EditSound = () => {
     }
   };
 
-
   const updateSound = async () => {
     const formDataToSend = new FormData();
     formDataToSend.append("image", selectedImage);
@@ -111,15 +106,20 @@ const EditSound = () => {
     formDataToSend.append("audio", sound);
     formDataToSend.append("title", data.title);
     formDataToSend.append("premium", data.premium);
+    formDataToSend.append("featured", featuredState);
     formDataToSend.append("soundcategory", data.soundcategory);
 
     setLoader(true);
     try {
-      const response = await axios.patch(`${BASEURL}/api/sounds/${id}`, formDataToSend, {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.patch(
+        `${BASEURL}/api/sounds/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.error === false) {
         successModal.fire({
           text: "Sound Updated Successfully",
@@ -140,6 +140,8 @@ const EditSound = () => {
     }
   };
 
+  console.log(data);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     questionModal
@@ -153,7 +155,6 @@ const EditSound = () => {
         }
       });
   };
-
   return (
     <>
       <DashboardLayout>
@@ -180,9 +181,8 @@ const EditSound = () => {
                         value={data.title || ""}
                         placeholder="Enter Title"
                         inputClass="mainInput"
-                        required
+                        // required
                         onChange={handleChange}
-
                       />
                     </div>
                     <div className="col-lg-6 mb-2">
@@ -216,8 +216,8 @@ const EditSound = () => {
                         <>
                           <audio className="audioPlayer" controls>
                             <source
-                              src={`${BASEURL+data.audio}`}
-                              type="audio/mp3"
+                              src={`${BASEURL + data.audio}`}
+                              type="audio/*"
                             />
                             Your browser does not support the audio element.
                           </audio>
@@ -228,20 +228,21 @@ const EditSound = () => {
                       <p className="mainLabel">New Sound*</p>
                       <label>
                         <div className="audioInput">
-                          <span>Select File(MP3)</span>
+                          <span>Select Audio File</span>
                         </div>
                         {sound && (
                           <p className="audioInputName oneLine">{sound.name}</p>
                         )}
                         {soundError && (
-                          <p className="audioInputName">Please select MP3 file</p>
+                          <p className="audioInputName">
+                            Please select correct file format
+                          </p>
                         )}
                         <input
                           type="file"
                           name="sound"
-                          accept="audio/mp3"
+                          accept="audio/*"
                           className="d-none"
-                          required
                           onChange={handleSoundChange}
                         />
                       </label>
@@ -253,7 +254,6 @@ const EditSound = () => {
                           name="soundcategory"
                           id="category"
                           className="mainInput w-auto"
-                          required
                           value={data.soundcategory}
                           onChange={handleChange}
                         >
@@ -266,13 +266,30 @@ const EditSound = () => {
                       )}
                     </div>
                     <div className="col-lg-6 mb-2">
+                      <input
+                        type="checkbox"
+                        name="featured"
+                        id="featured"
+                        checked={featuredState ? true : false}
+                        onChange={() => {
+                          setFeaturedState(!featuredState);
+                        }}
+                      />
+                      <label htmlFor="featured" className="mainLabel ms-1">
+                        Featured
+                      </label>
+                    </div>
+                    <div className="col-lg-6 mb-2">
                       <p className="mainLabel">Thumbnail*</p>
                       <label>
                         <div className="thumbnailInput">
                           {soundThumbnail ? (
                             <img src={soundThumbnail} alt="Thumbnail" />
                           ) : (
-                            <img src={`${BASEURL+data.thumbnail}`} alt="Thumbnail" />
+                            <img
+                              src={`${BASEURL + data.thumbnail}`}
+                              alt="Thumbnail"
+                            />
                           )}
                         </div>
                         <input
@@ -280,7 +297,7 @@ const EditSound = () => {
                           id="image"
                           accept="image/*"
                           className="d-none"
-                          required
+                          // required
                           onChange={handleThumbnailChange}
                         />
                       </label>
@@ -292,7 +309,7 @@ const EditSound = () => {
                           {soundImage ? (
                             <img src={soundImage} alt="Main" />
                           ) : (
-                            <img src={`${BASEURL+data.image}`} alt="Main" />
+                            <img src={`${BASEURL + data.image}`} alt="Main" />
                           )}
                         </div>
                         <input
@@ -300,7 +317,7 @@ const EditSound = () => {
                           id="image"
                           accept="image/*"
                           className="d-none"
-                          required
+                          // required
                           onChange={handleImageChange}
                         />
                       </label>
@@ -325,7 +342,6 @@ const EditSound = () => {
                 </form>
               </div>
             )}
-
           </div>
         </div>
       </DashboardLayout>
