@@ -22,7 +22,7 @@ const EditProfile = () => {
 
     useEffect(() => {
 
-        document.title = 'Scofa Relax | Edit Profile';
+        document.title = 'Relax Scofa | Edit Profile';
 
         setUserData(currentUser);
     }, []);

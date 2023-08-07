@@ -35,7 +35,7 @@ const ArticleManagement = () => {
 
 
   useEffect(() => {
-    document.title = "Scofa Relax | Article Management";
+    document.title = "Relax Scofa | Article Management";
   }, []);
 
   useEffect(() => {

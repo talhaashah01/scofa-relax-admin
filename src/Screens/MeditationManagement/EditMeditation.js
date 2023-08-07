@@ -20,21 +20,9 @@ const EditMeditation = () => {
   const [data, setData] = useState({});
   const [meditationOptions, setMeditationOptions] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(`${BASEURL}/api/meditation/${id}`);
-        setData(response.data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
-
-
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [featuredState, setFeaturedState] = useState(false);
   const [meditation, setMeditation] = useState(null);
   const [meditationError, setMeditationError] = useState(false);
 
@@ -45,9 +33,24 @@ const EditMeditation = () => {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(`${BASEURL}/api/meditation/${id}`);
+        setData(response.data.data);
+        setFeaturedState(response.data.data.featured);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     async function fetchMeditation() {
       try {
-        const response = await axios.get(`${BASEURL}/api/meditation/mediationcategories`);
+        const response = await axios.get(
+          `${BASEURL}/api/meditation/mediationcategories`
+        );
         setMeditationOptions(response.data.data);
       } catch (error) {
         console.error(error);
@@ -62,8 +65,8 @@ const EditMeditation = () => {
   };
 
   const handleMeditationChange = (event) => {
-      setMeditation(event.target.files[0]);
-      setMeditationError(false);
+    setMeditation(event.target.files[0]);
+    setMeditationError(false);
   };
 
   const handleImageChange = (event) => {
@@ -96,23 +99,45 @@ const EditMeditation = () => {
     }
   };
 
-
   const updateMeditation = async () => {
     const formDataToSend = new FormData();
-    formDataToSend.append("image", selectedImage);
-    formDataToSend.append("thumbnail", selectedThumbnail);
-    formDataToSend.append("audio", meditation);
-    formDataToSend.append("title", data.title);
-    formDataToSend.append("premium", data.premium);
-    formDataToSend.append("meditationcategory", data.meditationcategory);
+
+    if(data.title) {
+      formDataToSend.append("title", data.title);
+    }
+
+    if(data.premium) {
+      formDataToSend.append("premium", data.premium);
+    }
+
+    if(featuredState) {
+      formDataToSend.append("featured", featuredState);
+    }
+
+    if (data.meditationcategory) {
+      formDataToSend.append("meditationcategory", data.meditationcategory);
+    }
+    if (selectedThumbnail) {
+      formDataToSend.append("thumbnail", selectedThumbnail);
+    }
+    if (meditation) {
+      formDataToSend.append("audio", meditation);
+    }
+    if (selectedImage) {
+      formDataToSend.append("image", selectedImage);
+    }
 
     setLoader(true);
     try {
-      const response = await axios.patch(`${BASEURL}/api/meditation/${id}`, formDataToSend, {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.patch(
+        `${BASEURL}/api/meditation/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.error === false) {
         successModal.fire({
           text: "Meditation Updated Successfully",
@@ -175,7 +200,6 @@ const EditMeditation = () => {
                         inputClass="mainInput"
                         // required
                         onChange={handleChange}
-
                       />
                     </div>
                     <div className="col-lg-6 mb-2">
@@ -209,7 +233,7 @@ const EditMeditation = () => {
                         <>
                           <audio className="audioPlayer" controls>
                             <source
-                              src={`${BASEURL+data.audio}`}
+                              src={`${BASEURL + data.audio}`}
                               type="audio/*"
                             />
                             Your browser does not support the audio element.
@@ -224,17 +248,20 @@ const EditMeditation = () => {
                           <span>Select Audio File</span>
                         </div>
                         {meditation && (
-                          <p className="audioInputName oneLine">{meditation.name}</p>
+                          <p className="audioInputName oneLine">
+                            {meditation.name}
+                          </p>
                         )}
                         {meditationError && (
-                          <p className="audioInputName">Please select correct file format</p>
+                          <p className="audioInputName">
+                            Please select correct file format
+                          </p>
                         )}
                         <input
                           type="file"
                           name="meditation"
                           accept="audio/*"
                           className="d-none"
-                          // required
                           onChange={handleMeditationChange}
                         />
                       </label>
@@ -259,13 +286,30 @@ const EditMeditation = () => {
                       )}
                     </div>
                     <div className="col-lg-6 mb-2">
+                      <input
+                        type="checkbox"
+                        name="featured"
+                        id="featured"
+                        checked={featuredState ? true : false}
+                        onChange={() => {
+                          setFeaturedState(!featuredState);
+                        }}
+                      />
+                      <label htmlFor="featured" className="mainLabel ms-1">
+                        Featured
+                      </label>
+                    </div>
+                    <div className="col-lg-6 mb-2">
                       <p className="mainLabel">Thumbnail*</p>
                       <label>
                         <div className="thumbnailInput">
                           {meditationThumbnail ? (
                             <img src={meditationThumbnail} alt="Thumbnail" />
                           ) : (
-                            <img src={`${BASEURL+data.thumbnail}`} alt="Thumbnail" />
+                            <img
+                              src={`${BASEURL + data.thumbnail}`}
+                              alt="Thumbnail"
+                            />
                           )}
                         </div>
                         <input
@@ -285,7 +329,7 @@ const EditMeditation = () => {
                           {meditationImage ? (
                             <img src={meditationImage} alt="Main" />
                           ) : (
-                            <img src={`${BASEURL+data.image}`} alt="Main" />
+                            <img src={`${BASEURL + data.image}`} alt="Main" />
                           )}
                         </div>
                         <input
@@ -318,7 +362,6 @@ const EditMeditation = () => {
                 </form>
               </div>
             )}
-
           </div>
         </div>
       </DashboardLayout>

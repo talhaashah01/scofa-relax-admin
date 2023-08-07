@@ -17,7 +17,7 @@ const Profile = () => {
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
-        document.title = 'Scofa Relax | My Profile';
+        document.title = 'Relax Scofa | My Profile';
 
         setUserData(currentUser);
     }, []);

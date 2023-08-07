@@ -22,7 +22,7 @@ const EditSound = () => {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
-  const [featuredState, setFeaturedState] = useState(null);
+  const [featuredState, setFeaturedState] = useState(false);
   const [sound, setSound] = useState(null);
   const [soundError, setSoundError] = useState(false);
 
@@ -37,7 +37,7 @@ const EditSound = () => {
       try {
         const response = await axios.get(`${BASEURL}/api/sounds/${id}`);
         setData(response.data.data[0]);
-        setFeaturedState(data.featured);
+        setFeaturedState(response.data.data[0].featured);
       } catch (error) {
         console.error(error);
       }
@@ -101,13 +101,32 @@ const EditSound = () => {
 
   const updateSound = async () => {
     const formDataToSend = new FormData();
-    formDataToSend.append("image", selectedImage);
-    formDataToSend.append("thumbnail", selectedThumbnail);
-    formDataToSend.append("audio", sound);
-    formDataToSend.append("title", data.title);
-    formDataToSend.append("premium", data.premium);
-    formDataToSend.append("featured", featuredState);
-    formDataToSend.append("soundcategory", data.soundcategory);
+
+    if(data.title) {
+      formDataToSend.append("title", data.title);
+    }
+
+    if(data.premium) {
+      formDataToSend.append("premium", data.premium);
+    }
+
+    if(featuredState) {
+      formDataToSend.append("featured", featuredState);
+    }
+
+    if(data.soundcategory) {
+      formDataToSend.append("soundcategory", data.soundcategory);
+    }
+
+    if (selectedThumbnail) {
+      formDataToSend.append("thumbnail", selectedThumbnail);
+    }
+    if (sound) {
+      formDataToSend.append("audio", sound);
+    }
+    if (selectedImage) {
+      formDataToSend.append("image", selectedImage);
+    }
 
     setLoader(true);
     try {

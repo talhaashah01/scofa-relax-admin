@@ -19,7 +19,7 @@ const ChangePassword = () => {
 
     useEffect(() => {
 
-        document.title = 'Scofa Relax | Change Password';
+        document.title = 'Relax Scofa | Change Password';
 
         setUserData(currentUser);
     }, []);

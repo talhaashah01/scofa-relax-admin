@@ -20,23 +20,9 @@ const EditStory = () => {
   const [data, setData] = useState({});
   const [storyOptions, setStoryOptions] = useState([]);
 
-  console.log(data)
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(`${BASEURL}/api/stories/${id}`);
-        setData(response.data.data[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
-
-
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [featuredState, setFeaturedState] = useState(false);
   const [story, setStory] = useState(null);
   const [storyError, setStoryError] = useState(false);
 
@@ -47,9 +33,24 @@ const EditStory = () => {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(`${BASEURL}/api/stories/${id}`);
+        setData(response.data.data[0]);
+        setFeaturedState(response.data.data.featured);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     async function fetchStory() {
       try {
-        const response = await axios.get(`${BASEURL}/api/stories/storiescategories`);
+        const response = await axios.get(
+          `${BASEURL}/api/stories/storiescategories`
+        );
         setStoryOptions(response.data.data);
       } catch (error) {
         console.error(error);
@@ -64,8 +65,8 @@ const EditStory = () => {
   };
 
   const handleStoryChange = (event) => {
-      setStory(event.target.files[0]);
-      setStoryError(false);
+    setStory(event.target.files[0]);
+    setStoryError(false);
   };
 
   const handleImageChange = (event) => {
@@ -98,23 +99,41 @@ const EditStory = () => {
     }
   };
 
-
   const updateStory = async () => {
     const formDataToSend = new FormData();
-    formDataToSend.append("image", selectedImage);
-    formDataToSend.append("thumbnail", selectedThumbnail);
-    formDataToSend.append("audio", story);
-    formDataToSend.append("title", data.title);
-    formDataToSend.append("premium", data.premium);
-    formDataToSend.append("storiescategory", data.storiescategory);
+    if (data.title) {
+      formDataToSend.append("title", data.title);
+    }
+
+    if (data.premium) {
+      formDataToSend.append("premium", data.premium);
+    }
+
+    if (data.storiescategory) {
+      formDataToSend.append("storiescategory", data.storiescategory);
+    }
+
+    if (selectedThumbnail) {
+      formDataToSend.append("thumbnail", selectedThumbnail);
+    }
+    if (story) {
+      formDataToSend.append("audio", story);
+    }
+    if (selectedImage) {
+      formDataToSend.append("image", selectedImage);
+    }
 
     setLoader(true);
     try {
-      const response = await axios.patch(`${BASEURL}/api/stories/${id}`, formDataToSend, {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.patch(
+        `${BASEURL}/api/stories/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.error === false) {
         successModal.fire({
           text: "Story Updated Successfully",
@@ -177,7 +196,6 @@ const EditStory = () => {
                         inputClass="mainInput"
                         // required
                         onChange={handleChange}
-
                       />
                     </div>
                     <div className="col-lg-6 mb-2">
@@ -211,7 +229,7 @@ const EditStory = () => {
                         <>
                           <audio className="audioPlayer" controls>
                             <source
-                              src={`${BASEURL+data.audio}`}
+                              src={`${BASEURL + data.audio}`}
                               type="audio/*"
                             />
                             Your browser does not support the audio element.
@@ -229,7 +247,9 @@ const EditStory = () => {
                           <p className="audioInputName oneLine">{story.name}</p>
                         )}
                         {storyError && (
-                          <p className="audioInputName">Please select correct file format</p>
+                          <p className="audioInputName">
+                            Please select correct file format
+                          </p>
                         )}
                         <input
                           type="file"
@@ -247,7 +267,6 @@ const EditStory = () => {
                           name="storiescategory"
                           id="category"
                           className="mainInput w-auto"
-                          // required
                           value={data.storiescategory}
                           onChange={handleChange}
                         >
@@ -260,13 +279,30 @@ const EditStory = () => {
                       )}
                     </div>
                     <div className="col-lg-6 mb-2">
+                      <input
+                        type="checkbox"
+                        name="featured"
+                        id="featured"
+                        checked={featuredState ? true : false}
+                        onChange={() => {
+                          setFeaturedState(!featuredState);
+                        }}
+                      />
+                      <label htmlFor="featured" className="mainLabel ms-1">
+                        Featured
+                      </label>
+                    </div>
+                    <div className="col-lg-6 mb-2">
                       <p className="mainLabel">Thumbnail*</p>
                       <label>
                         <div className="thumbnailInput">
                           {storyThumbnail ? (
                             <img src={storyThumbnail} alt="Thumbnail" />
                           ) : (
-                            <img src={`${BASEURL+data.thumbnail}`} alt="Thumbnail" />
+                            <img
+                              src={`${BASEURL + data.thumbnail}`}
+                              alt="Thumbnail"
+                            />
                           )}
                         </div>
                         <input
@@ -286,7 +322,7 @@ const EditStory = () => {
                           {storyImage ? (
                             <img src={storyImage} alt="Main" />
                           ) : (
-                            <img src={`${BASEURL+data.image}`} alt="Main" />
+                            <img src={`${BASEURL + data.image}`} alt="Main" />
                           )}
                         </div>
                         <input
@@ -319,7 +355,6 @@ const EditStory = () => {
                 </form>
               </div>
             )}
-
           </div>
         </div>
       </DashboardLayout>

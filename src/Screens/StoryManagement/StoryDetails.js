@@ -17,7 +17,7 @@ const StoryDetails = () => {
   const [data, setData] = useState({});
   const [dateAdded, setDateAdded] = useState("");
 
-  console.log(data[0])
+  console.log(data[0]);
 
   useEffect(() => {
     async function fetchData() {
@@ -66,6 +66,10 @@ const StoryDetails = () => {
                   <p>{data.premium ? "Premium" : "Free"}</p>
                 </div>
                 <div className="col-lg-6 mb-2">
+                  <p className="mainLabel">Featured:</p>
+                  <p>{data.featured ? "Yes" : "No"}</p>
+                </div>
+                <div className="col-lg-6 mb-2">
                   <p className="mainLabel">Audio:</p>
                   {data.audio && (
                     <>
@@ -102,7 +106,12 @@ const StoryDetails = () => {
               </div>
               <div className="row">
                 <div className="col-12">
-                  <Link to={"#_"} variant="primaryButton" text="Edit" />
+                  <Link
+                    to={`/story-management/edit-story/${data.id}`}
+                    className="customButton primaryButton"
+                  >
+                    Edit
+                  </Link>
                 </div>
               </div>
             </div>

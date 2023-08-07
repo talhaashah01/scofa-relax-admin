@@ -20,23 +20,9 @@ const EditArticle = () => {
   const [data, setData] = useState({});
   const [articleOptions, setArticleOptions] = useState([]);
 
-  console.log(data)
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(`${BASEURL}/api/articles/${id}`);
-        setData(response.data.data[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
-
-
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [featuredState, setFeaturedState] = useState(false);
   const [article, setArticle] = useState(null);
   const [articleError, setArticleError] = useState(false);
 
@@ -47,9 +33,24 @@ const EditArticle = () => {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(`${BASEURL}/api/articles/${id}`);
+        setData(response.data.data[0]);
+        setFeaturedState(response.data.data.featured);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     async function fetchArticle() {
       try {
-        const response = await axios.get(`${BASEURL}/api/articles/articlecategories`);
+        const response = await axios.get(
+          `${BASEURL}/api/articles/articlecategories`
+        );
         setArticleOptions(response.data.data);
       } catch (error) {
         console.error(error);
@@ -64,8 +65,8 @@ const EditArticle = () => {
   };
 
   const handleArticleChange = (event) => {
-      setArticle(event.target.files[0]);
-      setArticleError(false);
+    setArticle(event.target.files[0]);
+    setArticleError(false);
   };
 
   const handleImageChange = (event) => {
@@ -98,23 +99,46 @@ const EditArticle = () => {
     }
   };
 
-
   const updateArticle = async () => {
     const formDataToSend = new FormData();
-    formDataToSend.append("image", selectedImage);
-    formDataToSend.append("thumbnail", selectedThumbnail);
-    formDataToSend.append("audio", article);
-    formDataToSend.append("title", data.title);
-    formDataToSend.append("premium", data.premium);
-    formDataToSend.append("articlecategory", data.articlecategory);
+
+    if (data.title) {
+      formDataToSend.append("title", data.title);
+    }
+
+    if (data.premium) {
+      formDataToSend.append("premium", data.premium);
+    }
+
+    if (featuredState) {
+      formDataToSend.append("featured", featuredState);
+    }
+
+    if (data.articlecategory) {
+      formDataToSend.append("articlecategory", data.articlecategory);
+    }
+
+    if (selectedThumbnail) {
+      formDataToSend.append("thumbnail", selectedThumbnail);
+    }
+    if (article) {
+      formDataToSend.append("audio", article);
+    }
+    if (selectedImage) {
+      formDataToSend.append("image", selectedImage);
+    }
 
     setLoader(true);
     try {
-      const response = await axios.patch(`${BASEURL}/api/articles/${id}`, formDataToSend, {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.patch(
+        `${BASEURL}/api/articles/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.error === false) {
         successModal.fire({
           text: "Article Updated Successfully",
@@ -177,7 +201,6 @@ const EditArticle = () => {
                         inputClass="mainInput"
                         // required
                         onChange={handleChange}
-
                       />
                     </div>
                     <div className="col-lg-6 mb-2">
@@ -211,7 +234,7 @@ const EditArticle = () => {
                         <>
                           <audio className="audioPlayer" controls>
                             <source
-                              src={`${BASEURL+data.audio}`}
+                              src={`${BASEURL + data.audio}`}
                               type="audio/*"
                             />
                             Your browser does not support the audio element.
@@ -226,10 +249,14 @@ const EditArticle = () => {
                           <span>Select Audio File</span>
                         </div>
                         {article && (
-                          <p className="audioInputName oneLine">{article.name}</p>
+                          <p className="audioInputName oneLine">
+                            {article.name}
+                          </p>
                         )}
                         {articleError && (
-                          <p className="audioInputName">Please select correct file format</p>
+                          <p className="audioInputName">
+                            Please select correct file format
+                          </p>
                         )}
                         <input
                           type="file"
@@ -260,13 +287,30 @@ const EditArticle = () => {
                       )}
                     </div>
                     <div className="col-lg-6 mb-2">
+                      <input
+                        type="checkbox"
+                        name="featured"
+                        id="featured"
+                        checked={featuredState ? true : false}
+                        onChange={() => {
+                          setFeaturedState(!featuredState);
+                        }}
+                      />
+                      <label htmlFor="featured" className="mainLabel ms-1">
+                        Featured
+                      </label>
+                    </div>
+                    <div className="col-lg-6 mb-2">
                       <p className="mainLabel">Thumbnail*</p>
                       <label>
                         <div className="thumbnailInput">
                           {articleThumbnail ? (
                             <img src={articleThumbnail} alt="Thumbnail" />
                           ) : (
-                            <img src={`${BASEURL+data.thumbnail}`} alt="Thumbnail" />
+                            <img
+                              src={`${BASEURL + data.thumbnail}`}
+                              alt="Thumbnail"
+                            />
                           )}
                         </div>
                         <input
@@ -286,7 +330,7 @@ const EditArticle = () => {
                           {articleImage ? (
                             <img src={articleImage} alt="Main" />
                           ) : (
-                            <img src={`${BASEURL+data.image}`} alt="Main" />
+                            <img src={`${BASEURL + data.image}`} alt="Main" />
                           )}
                         </div>
                         <input
@@ -319,7 +363,6 @@ const EditArticle = () => {
                 </form>
               </div>
             )}
-
           </div>
         </div>
       </DashboardLayout>

@@ -101,7 +101,6 @@ const AddArticleCategory = () => {
                           required=""
                           name="category"
                           className="mainInput"
-                          maxLength="15"
                           value={inputValue || ""}
                           onChange={handleChange}
                         />

@@ -64,6 +64,10 @@ const ArticleDetails = () => {
                   <p>{data.premium ? "Premium" : "Free"}</p>
                 </div>
                 <div className="col-lg-6 mb-2">
+                  <p className="mainLabel">Featured:</p>
+                  <p>{data.featured ? "Yes" : "No"}</p>
+                </div>
+                <div className="col-lg-6 mb-2">
                   <p className="mainLabel">Audio:</p>
                   {data.audio && (
                     <>
@@ -100,7 +104,12 @@ const ArticleDetails = () => {
               </div>
               <div className="row">
                 <div className="col-12">
-                  <Link to={"#_"} variant="primaryButton" text="Edit" />
+                  <Link
+                    to={`/article-management/edit-article/${data.id}`}
+                    className="customButton primaryButton"
+                  >
+                    Edit
+                  </Link>
                 </div>
               </div>
             </div>

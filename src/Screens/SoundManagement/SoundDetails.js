@@ -65,6 +65,10 @@ const SoundDetails = () => {
                   <p>{data.premium ? "Premium" : "Free"}</p>
                 </div>
                 <div className="col-lg-6 mb-2">
+                  <p className="mainLabel">Featured:</p>
+                  <p>{data.featured ? "Yes" : "No"}</p>
+                </div>
+                <div className="col-lg-6 mb-2">
                   <p className="mainLabel">Sound:</p>
                   {data.audio && (
                     <>
@@ -107,7 +111,7 @@ const SoundDetails = () => {
               </div>
               <div className="row">
                 <div className="col-12">
-                  <Link to={`/sound-management/edit-sound/${data.id}`} className="cu  stomButton primaryButton">Edit</Link>
+                  <Link to={`/sound-management/edit-sound/${data.id}`} className="customButton primaryButton">Edit</Link>
                 </div>
               </div>
             </div>

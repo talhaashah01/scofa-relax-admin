@@ -16,7 +16,7 @@ const ForgetPassword3 = () => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        document.title = 'Scofa Relax | Password Recovery';
+        document.title = 'Relax Scofa | Password Recovery';
     }, [])
 
 

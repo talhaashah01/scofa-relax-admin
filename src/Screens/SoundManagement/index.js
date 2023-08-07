@@ -41,7 +41,7 @@ const SoundManagement = () => {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    document.title = "Scofa Relax | Sound Management";
+    document.title = "Relax Scofa | Sound Management";
   }, []);
 
   useEffect(() => {

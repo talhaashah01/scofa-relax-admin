@@ -12,6 +12,10 @@ import AddSoundCategory from "../Screens/CategoryManagement/AddSoundCategory";
 import AddMeditationCategory from "../Screens/CategoryManagement/AddMeditationCategory";
 import AddStoryCategory from "../Screens/CategoryManagement/AddStoryCategory";
 import AddArticleCategory from "../Screens/CategoryManagement/AddArticleCategory";
+import EditSoundCategory from "../Screens/CategoryManagement/EditSoundCategory";
+import EditMeditationCategory from "../Screens/CategoryManagement/EditMeditationCategory";
+import EditStoriesCategory from "../Screens/CategoryManagement/EditStoriesCategory";
+import EditArticleCategory from "../Screens/CategoryManagement/EditArticleCategory";
 
 import SoundManagement from "../Screens/SoundManagement";
 import AddSound from "../Screens/SoundManagement/AddSound";
@@ -71,6 +75,7 @@ const AdminRouter = () => {
             </PrivateRoutes>
           }
         />
+
         <Route
           path="/category-management/add-sound-category"
           element={
@@ -79,6 +84,7 @@ const AdminRouter = () => {
             </PrivateRoutes>
           }
         />
+
         <Route
           path="/category-management/add-meditation-category"
           element={
@@ -102,6 +108,40 @@ const AdminRouter = () => {
           element={
             <PrivateRoutes>
               <AddArticleCategory />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/category-management/edit-sound-category/:id"
+          element={
+            <PrivateRoutes>
+              <EditSoundCategory />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/category-management/edit-meditation-category/:id"
+          element={
+            <PrivateRoutes>
+              <EditMeditationCategory />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/category-management/edit-stories-category/:id"
+          element={
+            <PrivateRoutes>
+              <EditStoriesCategory />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/category-management/edit-article-category/:id"
+          element={
+            <PrivateRoutes>
+              <EditArticleCategory />
             </PrivateRoutes>
           }
         />

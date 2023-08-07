@@ -4,7 +4,11 @@ import axios from "axios";
 
 import { Dropdown, Tab, Tabs } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faEllipsisV,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Layout/DashboardLayout";
 
@@ -53,7 +57,7 @@ const CategoryManagement = () => {
   const [articleFilterSearchValue, setArticleFilterSearchValue] = useState("");
 
   useEffect(() => {
-    document.title = "Scofa Relax | Category Management";
+    document.title = "Relax Scofa | Category Management";
   }, []);
 
   useEffect(() => {
@@ -360,6 +364,16 @@ const CategoryManagement = () => {
                                       align="end"
                                       className="tableDropdownMenu"
                                     >
+                                      <Link
+                                        className="tableAction"
+                                        to={`/category-management/edit-sound-category/${item.id}`}
+                                      >
+                                        <FontAwesomeIcon
+                                          icon={faEdit}
+                                          className="tableActionIcon"
+                                        />
+                                        Edit
+                                      </Link>
                                       <button
                                         type="button"
                                         className="tableAction"
@@ -440,6 +454,16 @@ const CategoryManagement = () => {
                                       align="end"
                                       className="tableDropdownMenu"
                                     >
+                                      <Link
+                                        className="tableAction"
+                                        to={`/category-management/edit-meditation-category/${item.id}`}
+                                      >
+                                        <FontAwesomeIcon
+                                          icon={faEdit}
+                                          className="tableActionIcon"
+                                        />
+                                        Edit
+                                      </Link>
                                       <button
                                         type="button"
                                         className="tableAction"
@@ -521,6 +545,16 @@ const CategoryManagement = () => {
                                       align="end"
                                       className="tableDropdownMenu"
                                     >
+                                      <Link
+                                        className="tableAction"
+                                        to={`/category-management/edit-stories-category/${item.id}`}
+                                      >
+                                        <FontAwesomeIcon
+                                          icon={faEdit}
+                                          className="tableActionIcon"
+                                        />
+                                        Edit
+                                      </Link>
                                       <button
                                         type="button"
                                         className="tableAction"
@@ -602,6 +636,16 @@ const CategoryManagement = () => {
                                       align="end"
                                       className="tableDropdownMenu"
                                     >
+                                      <Link
+                                        className="tableAction"
+                                        to={`/category-management/edit-article-category/${item.id}`}
+                                      >
+                                        <FontAwesomeIcon
+                                          icon={faEdit}
+                                          className="tableActionIcon"
+                                        />
+                                        Edit
+                                      </Link>
                                       <button
                                         type="button"
                                         className="tableAction"

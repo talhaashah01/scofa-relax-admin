@@ -24,6 +24,7 @@ const AddMeditation = () => {
   const [formData, setFormData] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [featuredState, setFeaturedState] = useState(false);
   const [meditation, setMeditation] = useState(null);
   const [meditationError, setMeditationError] = useState(false);
 
@@ -101,6 +102,7 @@ const AddMeditation = () => {
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
     formDataToSend.append("meditationcategory", formData.category);
+    formDataToSend.append("featured", featuredState);
     formDataToSend.append("naration", true);
 
     setLoader(true);
@@ -279,11 +281,24 @@ const AddMeditation = () => {
                       <input
                         type="file"
                         id="image"
-                        accept="image/*"
+                  s      accept="image/*"
                         className="d-none"
                         required
                         onChange={handleImageChange}
                       />
+                    </label>
+                  </div>
+                  <div className="col-12 mb-2">
+                    <input
+                      type="checkbox"
+                      name="featured"
+                      id="featured"
+                      onChange={() => {
+                        setFeaturedState(!featuredState);
+                      }}
+                    />
+                    <label htmlFor="featured" className="mainLabel ms-1">
+                      Featured
                     </label>
                   </div>
                 </div>

@@ -34,7 +34,7 @@ const MeditationManagement = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    document.title = "Scofa Relax | Meditation Management";
+    document.title = "Relax Scofa | Meditation Management";
   }, []);
 
   useEffect(() => {

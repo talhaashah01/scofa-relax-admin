@@ -15,7 +15,7 @@ const ForgetPassword2 = () => {
     const [formData, setFormData] = useState({})
 
     useEffect(() => {
-        document.title = 'Scofa Relax | Password Recovery';
+        document.title = 'Relax Scofa | Password Recovery';
     }, [])
 
 

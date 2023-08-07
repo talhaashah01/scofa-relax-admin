@@ -24,9 +24,9 @@ const AddArticle = () => {
   const [formData, setFormData] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [featuredState, setFeaturedState] = useState(false);
   const [article, setArticle] = useState(null);
   const [articleError, setArticleError] = useState(false);
-
 
   const [articleImage, setArticleImage] = useState(null);
   const [articleThumbnail, setArticleThumbnail] = useState(null);
@@ -37,7 +37,9 @@ const AddArticle = () => {
   useEffect(() => {
     async function fetchArticle() {
       try {
-        const response = await axios.get(`${BASEURL}/api/articles/articlecategories`);
+        const response = await axios.get(
+          `${BASEURL}/api/articles/articlecategories`
+        );
         setArticleOptions(response.data.data);
       } catch (error) {
         console.error(error);
@@ -45,7 +47,6 @@ const AddArticle = () => {
     }
     fetchArticle();
   }, []);
-
 
   useEffect(() => {
     const firstCategory = articleOptions[0]?.id.toString();
@@ -58,9 +59,9 @@ const AddArticle = () => {
   };
 
   const handleArticleChange = (event) => {
-    const audioResult = checkAudioFormat(event)
-    setArticle(audioResult.selectedFile)
-    setArticleError(audioResult.error)
+    const audioResult = checkAudioFormat(event);
+    setArticle(audioResult.selectedFile);
+    setArticleError(audioResult.error);
   };
 
   const handleImageChange = (event) => {
@@ -101,16 +102,20 @@ const AddArticle = () => {
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
     formDataToSend.append("articlecategory", formData.category);
+    formDataToSend.append("featured", featuredState);
     formDataToSend.append("naration", true);
-
 
     setLoader(true);
     try {
-      const response = await axios.post(`${BASEURL}/api/articles/`, formDataToSend, {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post(
+        `${BASEURL}/api/articles/`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.error === false) {
         successModal.fire({
           text: "Article Added Successfully",
@@ -209,7 +214,9 @@ const AddArticle = () => {
                         <p className="audioInputName oneLine">{article.name}</p>
                       )}
                       {articleError && (
-                        <p className="audioInputName">Please select correct file format</p>
+                        <p className="audioInputName">
+                          Please select correct file format
+                        </p>
                       )}
                       <input
                         type="file"
@@ -278,6 +285,19 @@ const AddArticle = () => {
                         required
                         onChange={handleImageChange}
                       />
+                    </label>
+                  </div>
+                  <div className="col-12 mb-2">
+                    <input
+                      type="checkbox"
+                      name="featured"
+                      id="featured"
+                      onChange={() => {
+                        setFeaturedState(!featuredState);
+                      }}
+                    />
+                    <label htmlFor="featured" className="mainLabel ms-1">
+                      Featured
                     </label>
                   </div>
                 </div>

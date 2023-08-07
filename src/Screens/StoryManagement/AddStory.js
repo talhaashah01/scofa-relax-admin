@@ -24,9 +24,9 @@ const AddStory = () => {
   const [formData, setFormData] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [featuredState, setFeaturedState] = useState(false);
   const [story, setStory] = useState(null);
   const [storyError, setStoryError] = useState(false);
-
 
   const [storyImage, setStoryImage] = useState(null);
   const [storyThumbnail, setStoryThumbnail] = useState(null);
@@ -37,7 +37,9 @@ const AddStory = () => {
   useEffect(() => {
     async function fetchStory() {
       try {
-        const response = await axios.get(`${BASEURL}/api/stories/storiescategories`);
+        const response = await axios.get(
+          `${BASEURL}/api/stories/storiescategories`
+        );
         setStoryOptions(response.data.data);
       } catch (error) {
         console.error(error);
@@ -46,7 +48,7 @@ const AddStory = () => {
     fetchStory();
   }, []);
 
-  console.log(formData)
+  console.log(formData);
 
   useEffect(() => {
     const firstCategory = storyOptions[0]?.id.toString();
@@ -59,9 +61,9 @@ const AddStory = () => {
   };
 
   const handleStoryChange = (event) => {
-    const audioResult = checkAudioFormat(event)
-    setStory(audioResult.selectedFile)
-    setStoryError(audioResult.error)
+    const audioResult = checkAudioFormat(event);
+    setStory(audioResult.selectedFile);
+    setStoryError(audioResult.error);
   };
 
   const handleImageChange = (event) => {
@@ -101,17 +103,21 @@ const AddStory = () => {
     formDataToSend.append("audio", story);
     formDataToSend.append("title", formData.title);
     formDataToSend.append("premium", formData.premium);
-    formDataToSend.append("storycategory", formData.category);
+    formDataToSend.append("storiescategory", formData.category);
+    formDataToSend.append("featured", featuredState);
     formDataToSend.append("naration", true);
-
 
     setLoader(true);
     try {
-      const response = await axios.post(`${BASEURL}/api/stories/`, formDataToSend, {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post(
+        `${BASEURL}/api/stories/`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.error === false) {
         successModal.fire({
           text: "Story Added Successfully",
@@ -210,7 +216,9 @@ const AddStory = () => {
                         <p className="audioInputName oneLine">{story.name}</p>
                       )}
                       {storyError && (
-                        <p className="audioInputName">Please select correct file format</p>
+                        <p className="audioInputName">
+                          Please select correct file format
+                        </p>
                       )}
                       <input
                         type="file"
@@ -278,6 +286,19 @@ const AddStory = () => {
                         required
                         onChange={handleImageChange}
                       />
+                    </label>
+                  </div>
+                  <div className="col-12 mb-2">
+                    <input
+                      type="checkbox"
+                      name="featured"
+                      id="featured"
+                      onChange={() => {
+                        setFeaturedState(!featuredState);
+                      }}
+                    />
+                    <label htmlFor="featured" className="mainLabel ms-1">
+                      Featured
                     </label>
                   </div>
                 </div>

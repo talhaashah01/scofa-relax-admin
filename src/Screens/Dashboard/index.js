@@ -11,7 +11,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
 
-    document.title = 'Scofa Relax | Dashboard';
+    document.title = 'Relax Scofa | Dashboard';
 
     setStatistics(stats)
   }, []);
