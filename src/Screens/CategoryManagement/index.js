@@ -185,7 +185,7 @@ const CategoryManagement = () => {
   const storyDeleteCategory = async (id) => {
     try {
       const response = await axios.delete(
-        `${BASEURL}/api/stories/storycategories/${id}`
+        `${BASEURL}/api/stories/storiescategories/${id}`
       );
       setStoryCategoryData(
         meditationCategoryData.filter((item) => item.id !== id)
@@ -215,7 +215,7 @@ const CategoryManagement = () => {
   const articleDeleteCategory = async (id) => {
     try {
       const response = await axios.delete(
-        `${BASEURL}/api/article/articlecategories/${id}`
+        `${BASEURL}/api/articles/articlecategories/${id}`
       );
       setArticleCategoryData(
         meditationCategoryData.filter((item) => item.id !== id)
